@@ -1,0 +1,22 @@
+[
+    {
+        "position": 1,
+        "alias": "jsanz",
+        "password": 456,
+        "score": 950,
+        "coins": 0,
+        "diamonds": 0,
+        "email": "jsanz@gmail.com",
+        "created": "2020-11-03T15:20:21.377Z"
+    },
+    {
+        "position": 2,
+        "alias": "arnau",
+        "password": "arnau",
+        "score": 0,
+        "coins": 105000,
+        "diamonds": 50,
+        "email": "arnau@gmail.com",
+        "created": "2021-01-27T18:33:12.681Z"
+    }
+]

@@ -1,0 +1,329 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Last Call: Survival Z",
+        "description": "SwaggerUI + Nodejs + express"
+    },
+    "paths": {
+        "/": {
+            "get": {
+              "summary": "Estado del servidor",
+              "description": "",
+              "parameters": [],
+              "responses": {
+                "100": {
+                  "description": "Pantalla Principal",
+                  "schema": {
+                    "$ref": "#/definitions/code100"
+                  }
+                }
+              }
+            }
+        },
+        "/players":{
+            "get": {
+              "tags": ["Mostrar jugadores"],
+              "summary": "Mostrar jugadores",
+              "description": "Mostrar todos los jugadores",
+              "parameters": [],
+              "responses": {
+                "400": {
+                  "description": "OK",
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "position": {
+                        "type": "integer",
+                        "example": 1
+                      },
+                      "alias": {
+                        "type": "string",
+                        "example": "josev",
+                        "description": "Nombre del jugador"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Jose",
+                        "description": "Nombre del jugador"
+                      },
+                      "surname": {
+                        "type": "string",
+                        "example": "Veiga",
+                        "description": "Apellido del jugador"
+                      },
+                      "score": {
+                        "type": "integer",
+                        "example": 2641
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+    
+          "/players/{alias}": {
+            "parameters": [
+              {
+                "name": "alias",
+                "in": "path",
+                "required": true,
+                "description": "Alias del jugador que desee encontrar",
+                "type": "string"
+              }
+            ],
+            "get": {
+              "tags": ["Mostrar jugadores"],
+              "summary": "Mostrar jugadores",
+              "description": "Mostrar un jugador específico",
+              "parameters": [
+                {
+                  "name": "alias",
+                  "in": "path",
+                  "description": "El alias del jugador.",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Jugador ya existe",
+                  "schema": {
+                    "$ref": "#/definitions/code200"
+                  }
+                },
+                "504": {
+                  "description": "Jugador no encontrado",
+                  "schema": {
+                    "$ref": "#/definitions/codeError504"
+                  }
+                }
+              }
+            },
+            "post": {
+              "tags": ["Editar jugadores"],
+              "summary": "Crear jugadores",
+              "description": "Introduce un nuevo jugador",
+              "parameters": [
+                {
+                  "name": "Player",
+                  "in": "body",
+                  "description": "Jugador que queremos crear",
+                  "schema": {
+                    "$ref": "#/definitions/Player"
+                  }
+                }
+              ],
+              "produces": [
+                "application/json"
+              ],
+              "responses": {
+                "200": {
+                  "description": "Nuevo jugador ha sido creado",
+                  "schema": {
+                    "$ref": "#/definitions/Player"
+                  }
+                },
+                "201": {
+                  "description": "Jugador Creado",
+                  "schema": {
+                    "$ref": "#/definitions/code201"
+                  }
+                },
+                "502": {
+                  "description": "Los campos: nombre, apellido, puntuacion son obligatorios (el valor de la puntuacion debe ser mayor que 0)",
+                  "schema": {
+                    "$ref": "#/definitions/codeError502"
+                  }
+                },
+                "503": {
+                  "description": "Jugador ya existe",
+                  "schema": {
+                    "$ref": "#/definitions/codeError503"
+                  }
+                }
+              }
+            },
+            "put": {
+              "tags": ["Modifica jugadores"],
+              "summary": "Edita un jugador",
+              "description": "Edita un jugador",
+              "parameters": [
+                {
+                  "name": "Player",
+                  "in": "body",
+                  "description": "Jugador que queremos actualizar.",
+                  "schema": {
+                    "$ref": "#/definitions/Player"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Jugador creado correctamente.",
+                  "schema": {
+                    "$ref": "#/definitions/Player"
+                  }
+                },
+                "202": {
+                  "description": "Jugador actualizado correctamente.",
+                  "schema": {
+                    "$ref": "#/definitions/code202"
+                  }
+                },
+                "502": {
+                  "description": "Los campos: nombre, apellido, puntuacion son obligatorios (el valor de la puntuacion debe ser mayor que 0)",
+                  "schema": {
+                    "$ref": "#/definitions/codeError502"
+                  }
+                },
+                "504": {
+                  "description": "Error: Jugador no encontrado",
+                  "schema": {
+                    "$ref": "#/definitions/codeError504"
+                  }
+                }
+              }
+            }
+          },
+    
+          "/ranking": {
+            "get": {
+              "tags": ["Mostrar jugadores"],
+              "summary": "Mostrar jugadores",
+              "description": "Mostrar todos los jugadores",
+              "parameters": [],
+              "responses": {
+                "400": {
+                  "description": "Ok",
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "position": {
+                        "type": "integer",
+                        "example": 1
+                      },
+                      "alias": {
+                        "type": "string",
+                        "example": "Marco",
+                        "description": "Alias del jugador"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Jose",
+                        "description": "Nombre del jugador"
+                      },
+                      "surname": {
+                        "type": "string",
+                        "example": "Veiga",
+                        "description": "Apellido del jugador"
+                      },
+                      "score": {
+                        "type": "integer",
+                        "example": 149
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+    },
+    "definitions":{
+        "Player":{
+          "required": [
+            "name",
+            "surname",
+            "score"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "uniqueItems": true
+            },
+            "surname": {
+              "type": "string"
+            },
+            "score": {
+              "type": "integer"
+            }
+          },
+          "example":{
+            "name": "Jose Manuel",
+            "surname": "Veiga Camiños",
+            "score": 3
+          }
+        },
+        "code100": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "integer",
+              "example": "2-DAMVI-Server Inicializado.",
+              "description": "Servidor-ON"
+            }
+          }
+        },
+        "code200": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "integer",
+              "example": "Jugador ya creado.",
+              "description": "Jugador ya creado."
+            }
+          }
+        },
+        "code201": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "integer",
+              "example": "Jugador creado correctamente",
+              "description": "Jugador creado correctamente"
+            }
+          }
+        },
+        "code202": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "integer",
+              "example": "Jugador actualizado correctamente",
+              "description": "Jugador actualizado correctamente"
+            }
+          }
+        },
+        "codeError502": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "integer",
+              "example": "Los campos: nombre, apellido, puntuacion son obligatorios (el valor de la puntuacion debe ser mayor que 0)",
+              "description": "Los campos: nombre, apellido, puntuacion son obligatorios (el valor de la puntuacion debe ser mayor que 0)"
+            }
+          }
+        },
+        "codeError503": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "integer",
+              "example": "Error: Jugador ya creado",
+              "description": "Error: Jugador ya creado"
+            }
+          }
+        },
+        "codeError504": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "integer",
+              "example": "Error: Jugador no encontrado",
+              "description": "Error: Jugador no encontrado"
+            }
+          }
+        }
+      }
+}
