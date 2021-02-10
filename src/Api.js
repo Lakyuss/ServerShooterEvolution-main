@@ -61,7 +61,7 @@ router.get('/players', function (req, res){
     res.send(players);
 });
 
-//////////////GET PLAYER///////////////
+//////////////GET PLAYER///////////////////////////
 router.get('/players/:alias', function (req, res) {
     var index = players.findIndex(j => j.alias === req.params.alias);
     if (index >= 0) {                                                                                                                     
@@ -119,6 +119,13 @@ router.post('/players/:alias', function (req, res) {
                 score: 0 ,
                 coins: 0,
                 diamonds: 0,
+                skills:{
+                    "1":0,
+                    "2":0,
+                    "3":0,
+                    "4":0,
+                    "5":0,
+                    "6":0},
                 email: paramEmail,
                 created: new Date()
             });
@@ -139,6 +146,7 @@ router.put('/players/:alias', function (req, res) {
     var paramPassword = req.body.password || '';
 
     var paramScore = req.body.score || '';
+    var paramSkill = req.body.skills || '';
     var paramEmail = req.body.email || '';
 
     if (paramalias === '' ||  parseInt(paramScore) <= 0 || paramScore === '' || paramEmail === '') 
@@ -156,6 +164,7 @@ router.put('/players/:alias', function (req, res) {
                 alias: paramalias,
                 password: paramPassword, 
                 score: paramScore,
+                skills: paramSkill,
                 email: paramEmail,
                 created:  players[index].created,
                 updated: new Date()
@@ -248,10 +257,97 @@ function buyDiamonds2(data){
     return response
 }
 
+function buySkill1(data){
+    getjson()
+    var index = players.findIndex(j => j.alias == data)
+    if(index != -1){
+        players[index].coins -=500
+        players[index].skills["1"] = 1
+        savejson()
+        response = players[index]
+    }else{
+        response = 'Error'
+    }
+    return response
+}
+function buySkill2(data){
+    getjson()
+    var index = players.findIndex(j => j.alias == data)
+    if(index != -1){
+        players[index].coins -=500
+        players[index].skills["2"] = 1
+        savejson()
+        response = players[index]
+    }else{
+        response = 'Error'
+    }
+    return response
+}
+function buySkill3(data){
+    getjson()
+    var index = players.findIndex(j => j.alias == data)
+    if(index != -1){
+        players[index].coins -=500
+        players[index].skills["3"] = 1
+        savejson()
+        response = players[index]
+    }else{
+        response = 'Error'
+    }
+    return response
+}
+function buySkill4(data){
+    getjson()
+    var index = players.findIndex(j => j.alias == data)
+    if(index != -1){
+        players[index].coins -=500
+        players[index].skills["4"] = 1
+        savejson()
+        response = players[index]
+    }else{
+        response = 'Error'
+    }
+    return response
+}
+function buySkill5(data){
+    getjson()
+    var index = players.findIndex(j => j.alias == data)
+    if(index != -1){
+        players[index].coins -=500
+        players[index].skills["5"] = 1
+        savejson()
+        response = players[index]
+    }else{
+        response = 'Error'
+    }
+    return response
+}
+function buySkill6(data){
+    getjson()
+    var index = players.findIndex(j => j.alias == data)
+    if(index != -1){
+        players[index].coins -=500
+        players[index].skills["6"] = 1
+        savejson()
+        response = players[index]
+    }else{
+        response = 'Error'
+    }
+    return response
+}
+
 module.exports = router;
+//Coins/Diamonds Exports
 module.exports.buyDiamonds1 = buyDiamonds1
 module.exports.buyDiamonds2 = buyDiamonds2
 module.exports.buyCoins1 = buyCoins1
 module.exports.buyCoins2 = buyCoins2
+//Skills Exports
+module.exports.buySkill1 = buySkill1
+module.exports.buySkill2 = buySkill2
+module.exports.buySkill3 = buySkill3
+module.exports.buySkill4 = buySkill4
+module.exports.buySkill5 = buySkill5
+module.exports.buySkill6 = buySkill6
 
 
