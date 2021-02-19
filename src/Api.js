@@ -215,6 +215,18 @@ router.delete('/players/:email/:password', function(req, res){
     }
     res.send(response);
 });
+function increaseScore(data){
+    getjson()
+    var index = players.findIndex(j => j.alias == data)
+    if(index != -1){
+        players[index].score += 1
+        savejson()
+        response = players[index]
+    }else{
+        response = 'Error'
+    }
+    return response
+} 
 function buyCoins1(data){
     getjson()
     var index = players.findIndex(j => j.alias == data)
@@ -349,6 +361,7 @@ module.exports = router;
 module.exports.UpdateRanking = UpdateRanking;
 module.exports.getjson = getjson;
 module.exports.players = players;
+module.exports.increaseScore = increaseScore;
 //Coins/Diamonds Exports
 module.exports.buyDiamonds1 = buyDiamonds1
 module.exports.buyDiamonds2 = buyDiamonds2

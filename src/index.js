@@ -23,9 +23,7 @@ var{ buySkill3 } = require('./Api.js');
 var{ buySkill4 } = require('./Api.js');
 var{ buySkill5 } = require('./Api.js');
 var{ buySkill6 } = require('./Api.js');
-/*var{ UpdateRanking } = require('./Api.js');
-var{ getjson } = require('./Api.js');
-var{ players } = require('./Api.js');*/
+var{ increaseScore } = require('./Api.js');
 
 //Settings
 const port = process.env.PORT || 2000; 
@@ -88,6 +86,12 @@ const io = SocketIO(server);
         p5:indexPlayers[4]
       });
     });
+    socket.on('increaseScore', (data) =>{
+      var score = increaseScore(data)
+      if(score != 'Error'){
+        socket.emit('playerdata', score)
+      }
+  });
     socket.on('buycoins1', (data) =>{
         var coins1 = buyCoins1(data)
         if(coins1 != 'Error'){
