@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const router = express.Router();
 const fs = require('fs');
+const json = require("body-parser/lib/types/json");
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
@@ -14,7 +15,7 @@ let codeError502 = { code: 503, error: true, message: 'The fields are mandatorie
 let codeError503 = { code: 503, error: true, message: 'Error: Player Exists' };
 let codeError504 = { code: 504, error: true, message: 'Error: Player not found'};
 
-var players = [];
+let players = [];
 let response = {
     error: false,
     code: 200,
@@ -28,6 +29,9 @@ function savejson(){
         if (err){
             console.log("error")
         }
+        else{
+            players = JSON.parse(jsonString);
+        }
         console.log('The file has been saved!'); 
     });
 };
@@ -38,6 +42,7 @@ function getjson(){
  
 ////////////////UPDATE RANKING FUNCTION///////////////////////////
 function UpdateRanking() {
+    getjson();
     //Order the ranking
     players.sort((a, b) => (a.score <= b.score) ? 1 : -1);
     //Position Update
@@ -112,6 +117,7 @@ router.post('/players/:alias', function (req, res) {
         } 
         else 
         {
+            getjson();
             players.push({ 
                 position: '', 
                 alias: paramAlias,
@@ -129,6 +135,7 @@ router.post('/players/:alias', function (req, res) {
                 email: paramEmail,
                 created: new Date()
             });
+            savejson();
             UpdateRanking();
             index = players.findIndex(j => j.alias === paramAlias);
             response = code201;
@@ -169,6 +176,7 @@ router.put('/players/:alias', function (req, res) {
                 created:  players[index].created,
                 updated: new Date()
             };
+            savejson();
             UpdateRanking();
             index = players.findIndex(j => j.alias === paramalias);
             response = code202;
@@ -194,6 +202,7 @@ router.delete('/players/:email/:password', function(req, res){
 
             players.splice(index, 1)
             response = code204;
+            savejson();
             UpdateRanking();
         }else{
             ////ERROR ON CREDENTIALS///
@@ -337,6 +346,9 @@ function buySkill6(data){
 }
 
 module.exports = router;
+module.exports.UpdateRanking = UpdateRanking;
+module.exports.getjson = getjson;
+module.exports.players = players;
 //Coins/Diamonds Exports
 module.exports.buyDiamonds1 = buyDiamonds1
 module.exports.buyDiamonds2 = buyDiamonds2

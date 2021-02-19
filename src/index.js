@@ -10,6 +10,7 @@ const bodyParser = require("../node_modules/body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 var apijs = require('./Api.js');
+const fs = require('fs');
 
 ////////////BUY REQUIRES///////////
 var{ buyDiamonds1 } = require('./Api.js');
@@ -22,6 +23,9 @@ var{ buySkill3 } = require('./Api.js');
 var{ buySkill4 } = require('./Api.js');
 var{ buySkill5 } = require('./Api.js');
 var{ buySkill6 } = require('./Api.js');
+/*var{ UpdateRanking } = require('./Api.js');
+var{ getjson } = require('./Api.js');
+var{ players } = require('./Api.js');*/
 
 //Settings
 const port = process.env.PORT || 2000; 
@@ -35,12 +39,55 @@ const server = app.listen(port, () => {
     console.log('Server on port: ',port);
 });
 
+let indexPlayers = []
+////////////////UPDATE RANKING FUNCTION///////////////////////////
+function UpdRanking() {
+  gjon();
+  //Order the ranking
+  indexPlayers.sort((a, b) => (a.score <= b.score) ? 1 : -1);
+  //Position Update
+  for (var x = 0; x < indexPlayers.length; x++) {
+    indexPlayers[x].position = x + 1;
+  }
+  sjon();
+  gjon();
+};
+///////////////////////SAVE AND GET JSON FUNCTIONS/////////////////////////////
+function sjon(){
+  jsonString = JSON.stringify(indexPlayers, null, 4);
+  fs.writeFileSync('./src/player.json', jsonString,'UTF8', (err) => { 
+      if (err){
+          console.log("error")
+      }
+      else{
+        indexPlayers = JSON.parse(jsonString);
+      }
+      console.log('The file has been saved!'); 
+  });
+};
+function gjon(){
+  var jsonString = fs.readFileSync('./src/player.json', 'UTF8')
+  indexPlayers = JSON.parse(jsonString);
+};
+
 //WebSockets
 const SocketIO = require('../node_modules/socket.io');
 const io = SocketIO(server); 
  
   io.on('connection', (socket) => {
     console.log('new connection', socket.id)
+
+    socket.on('rs',() =>{
+      UpdRanking();
+      gjon();
+      socket.emit('rankingData', ranking = {
+        p1:indexPlayers[0],
+        p2:indexPlayers[1],
+        p3:indexPlayers[2],
+        p4:indexPlayers[3],
+        p5:indexPlayers[4]
+      });
+    });
     socket.on('buycoins1', (data) =>{
         var coins1 = buyCoins1(data)
         if(coins1 != 'Error'){

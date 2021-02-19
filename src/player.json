@@ -1,20 +1,56 @@
 [
     {
         "position": 1,
+        "alias": "b",
+        "password": "b",
+        "score": 0,
+        "coins": 0,
+        "diamonds": 0,
+        "skills": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+        },
+        "email": "b@gmail.com",
+        "created": "2021-02-19T15:07:11.766Z"
+    },
+    {
+        "position": 2,
+        "alias": "a",
+        "password": "a",
+        "score": 0,
+        "coins": 0,
+        "diamonds": 0,
+        "skills": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+        },
+        "email": "a@gmail.com",
+        "created": "2021-02-19T15:07:51.969Z"
+    },
+    {
+        "position": 3,
         "alias": "jose",
         "password": "jose",
         "score": 0,
-        "coins": 34000,
-        "diamonds": -400,
+        "coins": 0,
+        "diamonds": 0,
         "skills": {
-            "1": 1,
-            "2": 1,
-            "3": 1,
-            "4": 1,
-            "5": 1,
-            "6": 1
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
         },
         "email": "jose@gmail.com",
-        "created": "2021-02-09T18:22:11.616Z"
+        "created": "2021-02-19T15:08:43.470Z"
     }
 ]
