@@ -87,10 +87,12 @@ const io = SocketIO(server);
       });
     });
     socket.on('increaseScore', (data) =>{
-      var score = increaseScore(data)
+      console.log("index")
+      increaseScore(data)
+      /*var score = increaseScore(data)
       if(score != 'Error'){
         socket.emit('playerdata', score)
-      }
+      }*/
   });
     socket.on('buycoins1', (data) =>{
         var coins1 = buyCoins1(data)

@@ -217,9 +217,10 @@ router.delete('/players/:email/:password', function(req, res){
 });
 function increaseScore(data){
     getjson()
-    var index = players.findIndex(j => j.alias == data)
+    var index = players.findIndex(j => j.alias == data.aliasProfile)
     if(index != -1){
-        players[index].score += 1
+        players[index].score += data.coinValue;
+        console.log(data.coinValue);
         savejson()
         response = players[index]
     }else{
